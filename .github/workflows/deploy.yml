@@ -30,9 +30,14 @@ jobs:
 
       - name: Export Static Site
         run: reflex export --frontend-only --no-zip
+        
+      - name: Move to public folder
+        run: |
+          mkdir public_html
+          cp -r .web/build/client/* public_html/
 
-      - name: List files (Detective)
-        run: ls -R .web
+      # - name: List files (Detective)
+      #   run: ls -R .web
 
       # Este paso es clave para que funcione tu dominio personalizado
       - name: Create CNAME file
