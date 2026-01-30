@@ -31,10 +31,12 @@ jobs:
       - name: Export Static Site
         run: reflex export --frontend-only --no-zip
 
+      - name: List files (Detective)
+        run: ls -R .web
+
       # Este paso es clave para que funcione tu dominio personalizado
       - name: Create CNAME file
-        run: echo "tudominio.com" > .web/_static/CNAME
-        # CAMBIA "tudominio.com" POR TU DOMINIO REAL DE HOSTINGER
+        run: echo "quickenglish.academy" > .web/_static/CNAME
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
