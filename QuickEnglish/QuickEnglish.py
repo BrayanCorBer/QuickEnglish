@@ -16,8 +16,7 @@ def navbar():
     return rx.hstack(
         # Logo (usando un icono o imagen placeholder)
         rx.hstack(
-            rx.icon(tag="graduation-cap", size=30, color="white"),
-            rx.text("QuickEnglish", font_size="1.5em", font_weight="bold", color="white"),
+            rx.image(src="/logo.svg", width="12.5vw", height="auto", alt="Logo"),
             spacing="3",
         ),
         rx.spacer(),
@@ -28,7 +27,7 @@ def navbar():
             spacing="5",
         ),
         width="100%",
-        padding="1em 2em",
+        padding=["1em", "1em 2em"],
         background_color="#0EA5E9",  # Color primario
         position="sticky",
         top="0",
@@ -39,8 +38,8 @@ def hero_banner():
     """Banner full width con foto de fondo."""
     return rx.box(
         rx.vstack(
-            rx.heading("A tu ritmo y en tu tiempo", font_size="3em", color="white", text_align="center"),
-            rx.text("Aprende el Inglés que necesitas para tus metas", font_size="1.2em", color="white"),
+            rx.heading("A tu ritmo y en tu tiempo", font_size=["2em", "3em"], color="white", text_align="center"),
+            rx.text("Aprende el Inglés que necesitas para tus metas", font_size=["1em", "1.2em"], color="white", text_align="center"),
             rx.link(
                 rx.button(
                     "Empezar Ahora",
@@ -63,7 +62,7 @@ def hero_banner():
         background_size="cover",
         background_position="center",
         width="100%",
-        height="500px",
+        height=["400px", "500px"],
     )
 
 def about_section():
@@ -78,7 +77,7 @@ def about_section():
             line_height="1.6",
             text_align="justify",
         ),
-        padding="4em 2em",
+        padding=["2em 1em", "4em 2em"],
     )
 
 def plan_card(title, price, features, payment_link):
@@ -119,19 +118,19 @@ def plans_section():
                 "Convenios", 
                 "$75.000/anual", 
                 ["Para instituciones", "Acceso a plataforma", "Material digital"],
-                "https://link-de-pago-convenios.com" # TODO: Reemplazar con el link real
+                "https://mpago.li/2iqDHuR" # TODO: Reemplazar con el link real
             ),
             plan_card(
                 "Inicios", 
-                "$80.000/mensual", 
-                ["2 clases semanales", "Acceso a plataforma", "Material digital"],
-                "https://link-de-pago-inicios.com" # TODO: Reemplazar con el link real
+                "$80.000/semana", 
+                ["2 clases", "Material digital", "desde A1 hasta B1"],
+                "https://mpago.li/1JFSait" # TODO: Reemplazar con el link real
             ),
             plan_card(
                 "Refuerzos", 
-                "$120.000/mensual", 
+                "$120.000/semana", 
                 ["2 Clases conversacionales", "Tutoría 1 a 1", "Preparación TOEFL"],
-                "https://link-de-pago-refuerzos.com" # TODO: Reemplazar con el link real
+                "https://mpago.li/1EqvroN" # TODO: Reemplazar con el link real
             ),
             flex_direction=["column", "row"], # Columna en móvil, fila en escritorio
             gap="2em",
@@ -139,7 +138,7 @@ def plans_section():
             width="100%",
         ),
         id="planes",
-        padding="4em 2em",
+        padding=["2em 1em", "4em 2em"],
         background_color="#f7fafc",
     )
 
@@ -225,7 +224,7 @@ def contact_form():
                     on_submit=ContactState.handle_submit,
                     width="100%",
                 ),
-                padding="3em",
+                padding=["1.5em", "3em"],
                 width="100%",
                 max_width="800px",
                 background_color="white",
@@ -235,8 +234,8 @@ def contact_form():
             ),
             align_items="center",
             width="100%",
-            padding_y="5em",
-            padding_x="2em",
+            padding_y=["3em", "5em"],
+            padding_x=["1em", "2em"],
         ),
         id="contacto",
         width="100%",
@@ -281,5 +280,9 @@ def index():
     )
 
 # Configuración de la App
-app = rx.App()
+app = rx.App(
+    head_components=[
+        rx.el.link(rel="icon", href="/favicon.svg", type="image/svg+xml"),
+    ],
+)
 app.add_page(index, title="English Institute App")
