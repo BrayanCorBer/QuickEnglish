@@ -1,0 +1,45 @@
+name: Deploy Reflex to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]  # O "master", revisa cómo se llama tu rama
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11' # O la versión que uses
+
+      - name: Install dependencies
+        run: |
+          pip install reflex
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Initialize Reflex (si es necesario)
+        run: reflex init
+
+      - name: Export Static Site
+        run: reflex export --frontend-only --no-zip
+
+      # Este paso es clave para que funcione tu dominio personalizado
+      - name: Create CNAME file
+        run: echo "tudominio.com" > .web/_static/CNAME
+        # CAMBIA "tudominio.com" POR TU DOMINIO REAL DE HOSTINGER
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .web/_static
+          # A veces la carpeta es .web/_static o public, depende de tu versión de Reflex.
+          # Si falla, revisa el log para ver dónde guardó el export.
