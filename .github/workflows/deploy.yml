@@ -36,7 +36,7 @@ jobs:
 
       # Este paso es clave para que funcione tu dominio personalizado
       - name: Create CNAME file
-        run: echo "quickenglish.academy" > .web/_static/CNAME
+        run: echo "quickenglish.academy" > .web/build/client/CNAME
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
