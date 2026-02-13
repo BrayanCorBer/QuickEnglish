@@ -248,15 +248,25 @@ def footer_contact():
         rx.center(
             rx.vstack(
                 rx.heading("¿Tienes dudas? ¡Hablemos!", size="4", color="white", margin_bottom="0.5em"),
-                rx.hstack(
-                    rx.icon(tag="mail", color="white"),
-                    rx.text("contacto@englishinstitute.com", color="white", font_weight="bold"),
-                    spacing="2",
+                rx.link(
+                    rx.hstack(
+                        rx.icon(tag="mail", color="white"),
+                        rx.text("info@quickenglish.academy", color="white", font_weight="bold"),
+                        spacing="2",
+                    ),
+                    href="mailto:info@quickenglish.academy",
+                    is_external=True,
+                    text_decoration="none",
                 ),
-                rx.hstack(
-                    rx.icon(tag="phone", color="white"),
-                    rx.text("+57 300 123 4567 (WhatsApp)", color="white", font_weight="bold"),
-                    spacing="2",
+                rx.link(
+                    rx.hstack(
+                        rx.icon(tag="phone", color="white"),
+                        rx.text("+57 3177 00 1841 (WhatsApp)", color="white", font_weight="bold"),
+                        spacing="2",
+                    ),
+                    href="https://wa.me/573177001841",
+                    is_external=True,
+                    text_decoration="none",
                 ),
                 spacing="3",
             ),
