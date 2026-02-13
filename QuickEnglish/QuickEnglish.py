@@ -1,25 +1,8 @@
 import reflex as rx
-import urllib.parse
+
 
 # --- ESTADO (Lógica del formulario) ---
-class ContactState(rx.State):
-    form_data: dict = {}
 
-    def handle_submit(self, form_data: dict):
-        """Maneja el envío del formulario."""
-        nombre = form_data.get("nombre", "")
-        email = form_data.get("email", "")
-        mensaje = form_data.get("mensaje", "")
-        
-        subject = "contacto desde formulario"
-        body = f"{nombre} {email} {mensaje}"
-        
-        query = urllib.parse.urlencode({
-            "subject": subject,
-            "body": body
-        }, quote_via=urllib.parse.quote)
-        
-        return rx.redirect(f"mailto:info@quickenglish.academy?{query}", is_external=True)
 
 # --- COMPONENTES DE UI ---
 
@@ -173,76 +156,27 @@ def contact_form():
                 margin_bottom="2em",
                 max_width="600px"
             ),
-            rx.card(
-                rx.form(
-                    rx.vstack(
-                        rx.box(
-                            rx.text("Nombre Completo", font_weight="bold", margin_bottom="0.5em", color="black"),
-                            rx.input(
-                                placeholder="Ej: Juan Pérez", 
-                                id="nombre", 
-                                size="3", 
-                                border_color="gray", 
-                                background_color="white",
-                                color="black",
-                                border_radius="md",
-                                width="100%"
-                            ),
-                            width="100%"
-                        ),
-                        rx.box(
-                            rx.text("Correo Electrónico", font_weight="bold", margin_bottom="0.5em", color="black"),
-                            rx.input(
-                                placeholder="Ej: juan@email.com", 
-                                id="email", 
-                                type="email", 
-                                size="3",
-                                border_color="gray", 
-                                background_color="white",
-                                color="black",
-                                border_radius="md",
-                                width="100%"
-                            ),
-                            width="100%"
-                        ),
-                        rx.box(
-                            rx.text("Cuéntanos tus metas", font_weight="bold", margin_bottom="0.5em", color="black"),
-                            rx.text_area(
-                                placeholder="Quiero mejorar mi speaking para el trabajo...", 
-                                id="mensaje", 
-                                border_color="gray", 
-                                background_color="white",
-                                color="black",
-                                border_radius="md",
-                                min_height="150px",
-                                width="100%"
-                            ),
-                            width="100%"
-                        ),
-                        rx.button(
-                            "Enviar Solicitud", 
-                            type="submit", 
-                            size="4",
-                            background_color="orange", 
-                            color="white", 
-                            width="100%", 
-                            margin_top="1em",
-                            _hover={"background_color": "#e65100", "transform": "scale(1.02)"},
-                            transition="0.2s"
-                        ),
-                        spacing="5",
-                        width="100%",
-                    ),
-                    on_submit=ContactState.handle_submit,
+            # Formulario de Tally incrustado
+            rx.box(
+                rx.el.iframe(
+                    data_tally_src="https://tally.so/embed/VL57oM?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1",
+                    loading="lazy",
                     width="100%",
+                    height="439",
+                    title="Quick English Web Form",
+                    # Reflex permite atributos con guion usando underscores o custom_attrs, pero data_tally_src funciona si data-tally-src no.
+                    # Usaremos custom_attrs para asegurar compatibilidad.
+                    custom_attrs={"frameborder": "0", "marginheight": "0", "marginwidth": "0"}
                 ),
-                padding=["1.5em", "3em"],
+                rx.script(
+                    """
+                    var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+                    """
+                ),
                 width="100%",
                 max_width="800px",
-                background_color="white",
-                box_shadow="0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
-                border_radius="1.5em",
-                border="1px solid #E2E8F0"
+                padding=["1.5em", "3em"], # Manteniendo algo de padding del contenedor original si se desea, o quitándolo si el iframe ya trae su propio estilo.
+                # El iframe de Tally suele necesitar ancho completo.
             ),
             align_items="center",
             width="100%",
