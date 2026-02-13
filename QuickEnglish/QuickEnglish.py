@@ -261,10 +261,10 @@ def footer_contact():
                 rx.link(
                     rx.hstack(
                         rx.icon(tag="phone", color="white"),
-                        rx.text("+57 3177 00 1841 (WhatsApp)", color="white", font_weight="bold"),
+                        rx.text("+57 322 2590050 (WhatsApp)", color="white", font_weight="bold"),
                         spacing="2",
                     ),
-                    href="https://wa.me/573177001841",
+                    href="https://wa.me/573222590050",
                     is_external=True,
                     text_decoration="none",
                 ),
