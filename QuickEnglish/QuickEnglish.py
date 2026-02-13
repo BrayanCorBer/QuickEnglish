@@ -1,4 +1,5 @@
 import reflex as rx
+import urllib.parse
 
 # --- ESTADO (Lógica del formulario) ---
 class ContactState(rx.State):
@@ -6,8 +7,19 @@ class ContactState(rx.State):
 
     def handle_submit(self, form_data: dict):
         """Maneja el envío del formulario."""
-        self.form_data = form_data
-        return rx.window_alert(f"¡Mensaje enviado! Gracias {form_data['nombre']}")
+        nombre = form_data.get("nombre", "")
+        email = form_data.get("email", "")
+        mensaje = form_data.get("mensaje", "")
+        
+        subject = "contacto desde formulario"
+        body = f"{nombre} {email} {mensaje}"
+        
+        query = urllib.parse.urlencode({
+            "subject": subject,
+            "body": body
+        }, quote_via=urllib.parse.quote)
+        
+        return rx.redirect(f"mailto:info@quickenglish.academy?{query}", is_external=True)
 
 # --- COMPONENTES DE UI ---
 
